@@ -1,5 +1,8 @@
 \documentclass[10pt]{article}
 \usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
 \usepackage{hyperref}
 \setlength\parindent{0pt}
 
@@ -12,12 +15,12 @@
 
 \vspace{0.3cm}
 
-\textbf{Profile}\\
+\textbf{Perfil}\\
 <<summary>>
 
 \vspace{0.3cm}
 
-\textbf{Experience}
+\textbf{Experiencia}
 
 <% for job in experience %>
 \textbf{<< job.company >>} (<< job.from >> - << job.to >>)\\
