@@ -105,7 +105,9 @@ for offer_file in os.listdir(OFFERS_DIR):
                 print(f"  Warning: Could not download photo: {e}")
 
         # Determine if offer has multi-language support
-        is_multilang = isinstance(offer["profile"], dict) and any(lang in offer["profile"] for lang in languages)
+        # Check if profile has language keys (es, en, etc.) instead of direct title/summary
+        profile_keys = set(offer.get("profile", {}).keys())
+        is_multilang = any(lang in profile_keys for lang in languages)
 
         # Generate PDF for each language
         for lang in languages:
@@ -120,11 +122,13 @@ for offer_file in os.listdir(OFFERS_DIR):
             # Get language-specific content
             if is_multilang:
                 title = offer["profile"][lang]["title"]
+                headline = offer["profile"][lang].get("headline", master.get("personal", {}).get("headline", ""))
                 summary = offer["profile"][lang]["summary"]
                 skills = offer["focus"]["skills"].get(lang, [])
             else:
                 # Fallback to non-multilang structure
                 title = offer["profile"]["title"]
+                headline = offer["profile"].get("headline", master.get("personal", {}).get("headline", ""))
                 summary = offer["profile"]["summary"]
                 skills = offer["focus"].get("skills", [])
 
@@ -164,7 +168,7 @@ for offer_file in os.listdir(OFFERS_DIR):
 
             rendered = template.render(
                 name=escape_latex(os.getenv("NAME")),
-                headline=escape_latex(master.get("personal", {}).get("headline", "")),
+                headline=escape_latex(headline),
                 title=escape_latex(title),
                 location=escape_latex(os.getenv("LOCATION")),
                 email=escape_latex(os.getenv("EMAIL")),
