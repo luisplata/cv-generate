@@ -1,0 +1,118 @@
+personal:
+  name: Tu Nombre Completo
+  headline: Tu Título Profesional Principal
+  location: Ciudad, País
+  email: tu@email.com
+  phone: "+57 3001234567"
+  photo_url: ""
+
+links:
+  portfolio: ""
+  github: ""
+  linkedin: ""
+  other: ""
+
+skills:
+  backend:
+    - Python
+    - Node.js
+  frontend:
+    - React
+    - Vue.js
+  mobile:
+    - React Native
+    - Flutter
+  qa:
+    - Manual testing
+    - Test automation
+  devops:
+    - Docker
+    - CI/CD
+  data:
+    - SQL
+    - PostgreSQL
+  design:
+    - Figma
+  other:
+    - Trabajo en equipo
+    - Resolución de problemas
+
+# === EXPERIENCIA ===
+# Soporta multi-idioma: usa "es:" y "en:" para cada campo de texto
+experience:
+  - company: "Nombre de la Empresa S.A."
+    period:
+      es: "Enero 2020 – Presente"
+      en: "January 2020 – Present"
+    roles:
+      - Software Engineer
+      - Backend Developer
+    achievements:
+      es:
+        - Desarrollé APIs REST con Python y Django
+        - Implementé arquitectura de microservicios
+        - Lideré equipo de 3 desarrolladores
+      en:
+        - Developed REST APIs with Python and Django
+        - Implemented microservices architecture
+        - Led team of 3 developers
+
+  - company: "Otra Empresa Ltda."
+    period:
+      es: "Junio 2018 – Diciembre 2019"
+      en: "June 2018 – December 2019"
+    roles:
+      - Junior Developer
+    achievements:
+      es:
+        - Mantuve aplicaciones web legacy
+        - Migré base de datos a PostgreSQL
+      en:
+        - Maintained legacy web applications
+        - Migrated database to PostgreSQL
+
+# === PROYECTOS ===
+projects:
+  - name:
+      es: "Sistema de Gestión Empresarial"
+      en: "Enterprise Management System"
+    description:
+      es: "Sistema web completo para gestión de inventario y ventas"
+      en: "Complete web system for inventory and sales management"
+    technologies:
+      - Python
+      - Django
+      - PostgreSQL
+
+  - name:
+      es: "App Móvil de Delivery"
+      en: "Mobile Delivery App"
+    description:
+      es: "Aplicación móvil multiplataforma para pedidos a domicilio"
+      en: "Cross-platform mobile app for home delivery"
+    technologies:
+      - React Native
+      - Node.js
+      - MongoDB
+
+# === CONFERENCIAS ===
+talks: []
+
+# === CERTIFICACIONES ===
+certifications: []
+
+# === EDUCACIÓN ===
+education:
+  - name: "Ingeniería de Sistemas"
+    school: "Universidad Nacional"
+    year:
+      es: "2018"
+      en: "2018"
+    link: ""
+
+  - name: "Certificación AWS Solutions Architect"
+    school: "Amazon Web Services"
+    year:
+      es: "2022"
+      en: "2022"
+    link: ""

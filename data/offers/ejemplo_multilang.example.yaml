@@ -1,0 +1,84 @@
+# EJEMPLO: Oferta Multi-idioma
+# Este formato genera un PDF por cada idioma configurado en .env
+
+profile:
+  # Español
+  es:
+    title: "Ingeniero de Software Full Stack – React & Node.js"
+    summary: >
+      Ingeniero de Software Full Stack con 4 años de experiencia desarrollando
+      aplicaciones web modernas con React, Node.js y bases de datos SQL/NoSQL.
+      Experiencia en arquitecturas escalables, testing automatizado y metodologías ágiles.
+      Capacidad para trabajar en equipos multidisciplinarios y comunicación efectiva
+      con stakeholders técnicos y no técnicos.
+  
+  # Inglés
+  en:
+    title: "Full Stack Software Engineer – React & Node.js"
+    summary: >
+      Full Stack Software Engineer with 4 years of experience developing modern
+      web applications with React, Node.js, and SQL/NoSQL databases. Experience
+      in scalable architectures, automated testing, and agile methodologies.
+      Ability to work in multidisciplinary teams and effective communication
+      with technical and non-technical stakeholders.
+
+focus:
+  # Los roles son iguales para todos los idiomas
+  roles:
+    - Software Engineer
+    - Full Stack Developer
+    - Frontend Developer
+    - Backend Developer
+  
+  # Skills por idioma
+  skills:
+    es:
+      - JavaScript
+      - TypeScript
+      - React
+      - Node.js
+      - Express
+      - PostgreSQL
+      - MongoDB
+      - Docker
+      - Git
+      - Metodologías Ágiles
+      - Testing (Jest, Cypress)
+      - CI/CD
+    
+    en:
+      - JavaScript
+      - TypeScript
+      - React
+      - Node.js
+      - Express
+      - PostgreSQL
+      - MongoDB
+      - Docker
+      - Git
+      - Agile Methodologies
+      - Testing (Jest, Cypress)
+      - CI/CD
+
+# Links (iguales para todos los idiomas)
+links:
+  - name: "Portfolio"
+    url: "https://mi-portfolio.com"
+  - name: "GitHub"
+    url: "https://github.com/usuario"
+  - name: "LinkedIn"
+    url: "https://linkedin.com/in/usuario"
+
+# Qué secciones mostrar
+show:
+  photo: false
+  links: true
+  projects: true
+  talks: false
+  certifications: false
+  education: true
+
+# RESULTADO:
+# Si LANGUAGES=es,en en .env, se generan:
+# - build/ejemplo_multilang/ejemplo_multilang_es.pdf (todo en español)
+# - build/ejemplo_multilang/ejemplo_multilang_en.pdf (todo en inglés)

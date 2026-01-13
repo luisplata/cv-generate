@@ -1,0 +1,126 @@
+\documentclass[11pt, sans]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{lmodern}
+\usepackage{enumitem}
+
+% Font and spacing
+\renewcommand{\familydefault}{\sfdefault}
+\setlength\parindent{0pt}
+\setlength{\parskip}{0.3em}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+}
+
+\begin{document}
+
+% === HEADER ===
+<% if photo %>
+\begin{minipage}{0.22\textwidth}
+  \includegraphics[width=2.8cm]{<<photo>>}
+\end{minipage}
+\begin{minipage}{0.75\textwidth}
+<% else %>
+\begin{minipage}{\textwidth}
+<% endif %>
+  {\Large \textbf{<<name>>}}\\
+  {\small <<headline>>}\\
+  {\small <<title>>}\\
+  {\small <<location>> \textbullet{} <<email>> \textbullet{} <<phone>>}\\
+  {\small <% for link in links %><% if not loop.first %>\textbullet{} <% endif %>\href{<<link.url>>}{<<link.name>>}<% endfor %>}
+\end{minipage}
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.3cm}
+
+% === PROFILE ===
+{\normalsize <<summary>>}
+
+\vspace{0.3cm}
+
+% === SKILLS ===
+\textbf{\large Skills}
+\vspace{0.1cm}
+
+{\small
+<% if skills %>
+  <% for skill in skills %>
+    • <<skill>>
+  <% endfor %>
+<% endif %>
+}
+
+\vspace{0.3cm}
+
+% === EXPERIENCE ===
+\textbf{\large Experience}
+
+<% for job in experience %>
+
+\textbf{<<job.company>>} — \textit{<<job.period>>}
+\vspace{0.05cm}
+
+\begin{itemize}[leftmargin=0.5cm, itemsep=0.15cm, topsep=0cm, parsep=0cm]
+  <% for bullet in job.achievements %>
+  \item <<bullet>>
+  <% endfor %>
+\end{itemize}
+
+<% endfor %>
+
+% === PROJECTS ===
+<% if projects %>
+\textbf{\large Projects}
+
+<% for p in projects %>
+\textbf{<<p.name>>} – <<p.description>>
+<% endfor %>
+
+<% endif %>
+
+% === EDUCATION ===
+<% if education and education|length > 0 %>
+\textbf{\large Education}
+
+\begin{itemize}[leftmargin=0.5cm, itemsep=0.1cm, topsep=0.1cm, parsep=0cm]
+  <% for edu in education %>
+  \item <% if edu.link %>\href{<<edu.link>>}{<<edu.name>>}<% else %><<edu.name>><% endif %><% if edu.school %> – <<edu.school>><% endif %><% if edu.year %> (<<edu.year>>)<% endif %>
+  <% endfor %>
+\end{itemize}
+
+<% endif %>
+
+% === CERTIFICATIONS ===
+<% if certifications and certifications|length > 0 %>
+\textbf{\large Certifications}
+
+\begin{itemize}[leftmargin=0.5cm, itemsep=0.1cm, topsep=0.1cm, parsep=0cm]
+  <% for cert in certifications %>
+  \item <% if cert.link %>\href{<<cert.link>>}{<<cert.name>>}<% else %><<cert.name>><% endif %><% if cert.issuer %> – <<cert.issuer>><% endif %><% if cert.date %> (<<cert.date>>)<% endif %>
+  <% endfor %>
+\end{itemize>
+
+<% endif %>
+
+% === TALKS ===
+<% if talks and talks|length > 0 %>
+\textbf{\large Talks}
+
+\begin{itemize}[leftmargin=0.5cm, itemsep=0.1cm, topsep=0.1cm, parsep=0cm]
+  <% for talk in talks %>
+  \item \href{<<talk.link>>}{<<talk.title>>} – <<talk.event>> (<<talk.date>>)
+  <% endfor %>
+\end{itemize>
+
+<% endif %>
+
+\end{document}

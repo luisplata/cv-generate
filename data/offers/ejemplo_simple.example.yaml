@@ -1,0 +1,49 @@
+# EJEMPLO: Oferta Simple (Mono-idioma)
+# Este formato es más simple, usa solo un idioma
+
+profile:
+  title: "Ingeniero de Software Backend – Python & Django"
+  summary: >
+    Ingeniero de Software con 5 años de experiencia en desarrollo backend,
+    especializado en Python, Django y arquitecturas de microservicios. Experiencia
+    liderando equipos, diseñando APIs REST y optimizando rendimiento de bases de datos.
+    Capacidad comprobada para trabajar en entornos ágiles y entregar soluciones escalables.
+
+focus:
+  roles:
+    # IMPORTANTE: Estos roles deben coincidir con los roles en master.yaml
+    # Solo se incluirán experiencias que tengan estos roles
+    - Software Engineer
+    - Backend Developer
+  
+  skills:
+    # Lista de habilidades a destacar en este CV
+    - Python
+    - Django
+    - REST APIs
+    - PostgreSQL
+    - Docker
+    - CI/CD
+    - Microservicios
+    - Git
+    - Trabajo en equipo
+    - Liderazgo técnico
+
+# Links personalizados para esta oferta (opcional)
+# Si no defines esto, se usan los del .env
+links:
+  - name: "Portfolio"
+    url: "https://mi-portfolio.com"
+  - name: "GitHub"
+    url: "https://github.com/usuario"
+  - name: "LinkedIn"
+    url: "https://linkedin.com/in/usuario"
+
+# Qué secciones mostrar
+show:
+  photo: false          # true para incluir foto
+  links: true           # true para mostrar links
+  projects: true        # true para incluir proyectos
+  talks: false          # true para incluir conferencias
+  certifications: false # true para incluir certificaciones
+  education: true       # true para incluir educación

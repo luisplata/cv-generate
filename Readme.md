@@ -1,23 +1,322 @@
-## Requisitos
+# 📄 Generador de CV Personalizado
+
+Sistema automatizado para generar CVs personalizados en PDF a partir de plantillas LaTeX y archivos YAML, con soporte multi-idioma.
+
+## 🚀 Características
+
+- ✅ Generación automática de CVs en PDF
+- 🌍 Soporte multi-idioma (español, inglés, etc.)
+- 📝 Personalización por oferta de trabajo
+- 🎨 Templates LaTeX personalizables
+- 🔗 Links parametrizables por oferta
+- 📸 Soporte para foto de perfil (opcional)
+- ⚡ Filtrado inteligente de experiencia según roles
+
+## 📋 Requisitos
+
 - Python 3.10+
-- pdflatex (LaTeX) disponible en la ruta
+- pdflatex (LaTeX) - MiKTeX (Windows) o TeX Live (Linux/macOS)
+- Git (opcional)
 
-## Instalacion rapida
-1. Crear entorno: `python -m venv venv`
-2. Activar entorno: `source venv/Scripts/activate` (Windows PowerShell/CMD) o `source venv/bin/activate` (Linux/macOS)
-3. Instalar dependencias: `pip install -r requirements.txt`
+## 🔧 Instalación
 
-## Estructura de datos
-- Datos base: `data/master/master.yaml`
-- Ofertas/variantes: archivos `.yaml` en `data/offers/` (uno por oferta)
-- Plantilla LaTeX: `templates/ats.tex`
+1. **Clonar el repositorio**
+   ```bash
+   git clone <repo-url>
+   cd cv-generate
+   ```
 
-## Uso
-1. Asegurate de tener los YAML completos en `data/master/` y `data/offers/`.
-2. Ejecuta el generador: `python generate.py`
-3. Los PDFs se guardan en `build/<nombre_oferta>/<nombre_oferta>.pdf`.
+2. **Crear entorno virtual**
+   ```bash
+   python -m venv venv
+   ```
 
-## Crear una nueva oferta
-1. Copia un YAML existente en `data/offers/` y renombralo (ejemplo: `MiOferta.yaml`).
-2. Ajusta `profile` y `focus` dentro del YAML para reflejar el rol.
-3. Vuelve a correr `python generate.py` para generar el PDF.
+3. **Activar entorno virtual**
+   - Windows (PowerShell/CMD): `venv\Scripts\activate`
+   - Linux/macOS: `source venv/bin/activate`
+
+4. **Instalar dependencias**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+5. **Configurar variables de entorno**
+   ```bash
+   cp .env.example .env
+   # Edita .env con tus datos
+   ```
+
+## 📁 Estructura del Proyecto
+
+```
+cv-generate/
+├── data/
+│   ├── master/
+│   │   └── master.yaml          # Datos maestros (experiencia, educación, etc.)
+│   └── offers/
+│       ├── ejemplo_simple.yaml  # Ejemplo: Oferta mono-idioma
+│       └── ejemplo_multilang.yaml # Ejemplo: Oferta multi-idioma
+├── templates/
+│   ├── ats.tex                  # Template por defecto
+│   ├── ats_es.tex              # Template en español
+│   └── ats_en.tex              # Template en inglés
+├── build/                       # PDFs generados (auto-creado)
+├── .env                         # Variables de entorno
+├── generate.py                  # Script principal
+└── requirements.txt             # Dependencias Python
+```
+
+## ⚙️ Configuración
+
+### 1. Variables de Entorno (.env)
+
+```env
+NAME=Tu Nombre Completo
+LOCATION=Ciudad, País
+EMAIL=tu@email.com
+PHONE=+57 3001234567
+
+# Idiomas a generar (separados por coma)
+LANGUAGES=es,en
+
+# URL de tu foto (opcional)
+PHOTO_URL=https://ejemplo.com/foto.jpg
+
+# Links (dejar vacío si no tienes)
+PORTFOLIO=https://tu-portfolio.com
+GITHUB=https://github.com/tuusuario
+LINKEDIN=https://linkedin.com/in/tuusuario
+ITCH=
+```
+
+### 2. Master YAML (data/master/master.yaml)
+
+Contiene toda tu información profesional. Soporta multi-idioma.
+
+**Ver archivo de ejemplo:** `data/master/master.example.yaml`
+
+### 3. Ofertas YAML (data/offers/)
+
+Cada archivo representa una personalización para una oferta específica.
+
+#### Oferta Simple (mono-idioma)
+
+**Ver archivo de ejemplo:** `data/offers/ejemplo_simple.yaml`
+
+#### Oferta Multi-idioma
+
+**Ver archivo de ejemplo:** `data/offers/ejemplo_multilang.yaml`
+
+## 🎯 Uso
+
+### Generar todos los CVs
+
+```bash
+python generate.py
+```
+
+Los PDFs se generan en `build/<nombre_oferta>/`
+
+### Generar solo en español
+
+En `.env`:
+```env
+LANGUAGES=es
+```
+
+### Generar en múltiples idiomas
+
+En `.env`:
+```env
+LANGUAGES=es,en
+```
+
+Para ofertas multi-idioma, genera automáticamente:
+- `oferta_es.pdf`
+- `oferta_en.pdf`
+
+## 📝 Crear una Nueva Oferta
+
+1. **Copia un ejemplo**
+   ```bash
+   cp data/offers/ejemplo_simple.yaml data/offers/Mi_Oferta_VASS.yaml
+   ```
+
+2. **Edita el archivo**
+   - Modifica `profile.title` y `profile.summary`
+   - Ajusta `focus.roles` (roles que quieres filtrar)
+   - Actualiza `focus.skills` (habilidades relevantes)
+   - Personaliza `links` si es necesario
+
+3. **Genera el PDF**
+   ```bash
+   python generate.py
+   ```
+
+4. **Resultado**
+   ```
+   build/Mi_Oferta_VASS/Mi_Oferta_VASS.pdf
+   ```
+
+## 🌍 Multi-idioma
+
+### Estructura de Oferta Multi-idioma
+
+```yaml
+profile:
+  es:
+    title: "Ingeniero de Software"
+    summary: "Descripción en español..."
+  en:
+    title: "Software Engineer"
+    summary: "Description in English..."
+
+focus:
+  roles:
+    - Software Engineer
+    - Backend Developer
+  skills:
+    es:
+      - Python
+      - Django
+    en:
+      - Python
+      - Django
+```
+
+### Estructura de Master Multi-idioma
+
+```yaml
+experience:
+  - company: "Empresa S.A."
+    period:
+      es: "Enero 2020 – Presente"
+      en: "January 2020 – Present"
+    roles:
+      - Software Engineer
+    achievements:
+      es:
+        - Desarrollé APIs REST
+      en:
+        - Developed REST APIs
+```
+
+## 🔗 Links Personalizados
+
+### Desde .env (global)
+
+```env
+PORTFOLIO=https://portfolio.com
+GITHUB=https://github.com/user
+```
+
+### Por oferta (YAML)
+
+```yaml
+links:
+  - name: "Portfolio"
+    url: "https://mi-portfolio.com"
+  - name: "GitHub"
+    url: "https://github.com/usuario"
+  - name: "GameJolt"
+    url: "https://gamejolt.com/@usuario"
+```
+
+## 🎨 Personalizar Templates
+
+Los templates LaTeX están en `templates/`:
+
+- `ats_es.tex` - Encabezados en español
+- `ats_en.tex` - Encabezados en inglés
+
+Edita estos archivos para cambiar el diseño visual.
+
+## 🛠️ Filtrado por Roles
+
+El sistema filtra automáticamente la experiencia según los roles definidos en `focus.roles`:
+
+```yaml
+# En la oferta
+focus:
+  roles:
+    - QA Engineer
+    - QA Analyst
+
+# Solo se incluirán trabajos del master.yaml que tengan estos roles
+```
+
+## 🐛 Troubleshooting
+
+### Error: "pdflatex not found"
+
+Instala LaTeX:
+- **Windows**: [MiKTeX](https://miktex.org/download)
+- **macOS**: `brew install mactex`
+- **Linux**: `sudo apt install texlive-full`
+
+### Error: "ModuleNotFoundError: No module named 'yaml'"
+
+```bash
+pip install -r requirements.txt
+```
+
+### El PDF no muestra experiencia
+
+Verifica que los `roles` en `focus.roles` coincidan con los roles en `master.yaml`:
+
+```yaml
+# Oferta
+focus:
+  roles:
+    - QA Engineer  # ✅ Exacto
+
+# Master
+experience:
+  - roles:
+      - QA Engineer  # ✅ Coincide
+```
+
+### Links no aparecen
+
+- Verifica que estén en `.env` O en el YAML de la oferta
+- Asegúrate de que `show.links: true` en la oferta
+
+## 📚 Ejemplos de Uso
+
+Ver archivos de ejemplo:
+- **Master**: `data/master/master.example.yaml` - Plantilla con todos tus datos profesionales
+- **Oferta simple**: `data/offers/ejemplo_simple.example.yaml` - CV mono-idioma
+- **Oferta multi-idioma**: `data/offers/ejemplo_multilang.example.yaml` - CV en español e inglés
+- **Variables de entorno**: `.env.example` - Configuración de datos personales
+- **Guía rápida**: `QUICKSTART.md` - Pasos para empezar en 5 minutos
+
+### Comenzar desde Cero
+
+1. Copia los ejemplos:
+   ```bash
+   cp .env.example .env
+   cp data/master/master.example.yaml data/master/master.yaml
+   cp data/offers/ejemplo_simple.example.yaml data/offers/MiPrimeraOferta.yaml
+   ```
+
+2. Edita con tus datos:
+   - `.env` - Tus datos personales
+   - `data/master/master.yaml` - Tu experiencia completa
+   - `data/offers/MiPrimeraOferta.yaml` - Personalización para la oferta
+
+3. Genera:
+   ```bash
+   python generate.py
+   ```
+
+## 🤝 Contribuir
+
+1. Fork el proyecto
+2. Crea una rama: `git checkout -b feature/nueva-funcionalidad`
+3. Commit: `git commit -m 'Agrega nueva funcionalidad'`
+4. Push: `git push origin feature/nueva-funcionalidad`
+5. Abre un Pull Request
+
+## 📄 Licencia
+
+MIT License - Libre para uso personal y comercial.
