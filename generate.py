@@ -63,6 +63,7 @@ for offer_file in os.listdir(OFFERS_DIR):
 
     rendered = template.render(
         name=os.getenv("NAME"),
+        headline=offer["profile"].get("headline", master.get("personal", {}).get("headline", "")),
         title=offer["profile"]["title"],
         location=os.getenv("LOCATION"),
         email=os.getenv("EMAIL"),
