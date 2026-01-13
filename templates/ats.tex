@@ -23,17 +23,19 @@
 \begin{document}
 
 % === HEADER ===
+<% if photo %>
 \begin{minipage}{0.22\textwidth}
   \includegraphics[width=2.8cm]{<<photo>>}
 \end{minipage}
 \begin{minipage}{0.75\textwidth}
+<% else %>
+\begin{minipage}{\textwidth}
+<% endif %>
   {\Large \textbf{<<name>>}}\\
   {\small <<headline>>}\\
   {\small <<title>>}\\
   {\small <<location>> \textbullet{} <<email>> \textbullet{} <<phone>>}\\
-  {\small \href{<<portfolio>>}{Portfolio} \textbullet{} 
-  \href{<<github>>}{GitHub} \textbullet{} 
-  \href{<<linkedin>>}{LinkedIn}}
+  {\small <% for link in links %><% if not loop.first %>\textbullet{} <% endif %>\href{<<link.url>>}{<<link.name>>}<% endfor %>}
 \end{minipage}
 
 \vspace{0.2cm}
