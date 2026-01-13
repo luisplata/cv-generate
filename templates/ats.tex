@@ -1,0 +1,30 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\setlength\parindent{0pt}
+
+\begin{document}
+
+{\LARGE <<name>> }\\
+<<title>>\\
+<<location>> • <<email>> • <<phone>>\\
+<<website>> • <<github>> • <<linkedin>>
+
+\vspace{0.3cm}
+
+\textbf{Profile}\\
+<<summary>>
+
+\vspace{0.3cm}
+
+\textbf{Experience}
+
+<% for job in experience %>
+\textbf{<< job.company >>} (<< job.from >> - << job.to >>)\\
+<% for bullet in job.bullets %>
+- << bullet >>\\
+<% endfor %>
+\vspace{0.2cm}
+<% endfor %>
+
+\end{document}
