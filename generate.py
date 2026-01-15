@@ -11,6 +11,7 @@ def escape_latex(text):
     if not isinstance(text, str):
         return text
     replacements = {
+        '\\': r'\textbackslash{}',
         '&': r'\&',
         '%': r'\%',
         '$': r'\$',
@@ -20,11 +21,21 @@ def escape_latex(text):
         '}': r'\}',
         '~': r'\textasciitilde{}',
         '^': r'\textasciicircum{}',
-        '\\': r'\textbackslash{}',
     }
     for char, escaped in replacements.items():
         text = text.replace(char, escaped)
     return text
+
+def escape_dict_values(d):
+    """Recursively escape LaTeX characters in dict values"""
+    if isinstance(d, dict):
+        return {k: escape_dict_values(v) for k, v in d.items()}
+    elif isinstance(d, list):
+        return [escape_dict_values(item) for item in d]
+    elif isinstance(d, str):
+        return escape_latex(d)
+    else:
+        return d
 
 def _build_links(offer):
     """Build links list from offer config or .env"""
@@ -142,7 +153,7 @@ for offer_file in os.listdir(OFFERS_DIR):
                         job_copy["period"] = job["period"].get(lang, job["period"].get("es", ""))
                     if isinstance(job.get("achievements"), dict):
                         job_copy["achievements"] = job["achievements"].get(lang, job["achievements"].get("es", []))
-                    experience.append(job_copy)
+                    experience.append(escape_dict_values(job_copy))
 
             # Translate projects
             projects = None
@@ -154,7 +165,7 @@ for offer_file in os.listdir(OFFERS_DIR):
                         proj_copy["name"] = proj["name"].get(lang, proj["name"].get("es", ""))
                     if isinstance(proj.get("description"), dict):
                         proj_copy["description"] = proj["description"].get(lang, proj["description"].get("es", ""))
-                    projects.append(proj_copy)
+                    projects.append(escape_dict_values(proj_copy))
 
             # Translate education
             education = None
@@ -162,9 +173,27 @@ for offer_file in os.listdir(OFFERS_DIR):
                 education = []
                 for edu in master.get("education", []):
                     edu_copy = edu.copy()
+                    if isinstance(edu.get("name"), dict):
+                        edu_copy["name"] = edu["name"].get(lang, edu["name"].get("es", ""))
+                    if isinstance(edu.get("school"), dict):
+                        edu_copy["school"] = edu["school"].get(lang, edu["school"].get("es", ""))
                     if isinstance(edu.get("year"), dict):
                         edu_copy["year"] = edu["year"].get(lang, edu["year"].get("es", ""))
-                    education.append(edu_copy)
+                    education.append(escape_dict_values(edu_copy))
+
+            # Translate talks
+            talks = None
+            if offer["show"].get("talks") and master.get("talks"):
+                talks = []
+                for talk in master.get("talks", []):
+                    talk_copy = talk.copy()
+                    if isinstance(talk.get("title"), dict):
+                        talk_copy["title"] = talk["title"].get(lang, talk["title"].get("es", ""))
+                    if isinstance(talk.get("event"), dict):
+                        talk_copy["event"] = talk["event"].get(lang, talk["event"].get("es", ""))
+                    if isinstance(talk.get("date"), dict):
+                        talk_copy["date"] = talk["date"].get(lang, talk["date"].get("es", ""))
+                    talks.append(escape_dict_values(talk_copy))
 
             rendered = template.render(
                 name=escape_latex(os.getenv("NAME")),
@@ -179,7 +208,7 @@ for offer_file in os.listdir(OFFERS_DIR):
                 skills=[escape_latex(s) for s in skills],
                 experience=experience,
                 projects=projects,
-                talks=master.get("talks") if offer["show"].get("talks") else None,
+                talks=talks,
                 certifications=master.get("certifications"),
                 education=education
             )

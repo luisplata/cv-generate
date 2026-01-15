@@ -82,7 +82,7 @@
 \textbf{\large Proyectos}
 
 <% for p in projects %>
-\textbf{<<p.name>>} – <<p.description>>
+<% if p.link %>\textbf{\href{<<p.link>>}{<<p.name>>}}<% else %>\textbf{<<p.name>>}<% endif %> – <<p.description>>
 <% endfor %>
 
 <% endif %>
