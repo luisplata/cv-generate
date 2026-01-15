@@ -85,6 +85,9 @@ with open(MASTER_FILE, encoding="utf-8") as f:
 
 os.makedirs(BUILD_DIR, exist_ok=True)
 
+# Get NAME from .env and sanitize for filename
+person_name = os.getenv("NAME", "CV").replace(" ", "_")
+
 for offer_file in os.listdir(OFFERS_DIR):
     if not offer_file.endswith((".yaml", ".yml")):
         continue
@@ -143,17 +146,34 @@ for offer_file in os.listdir(OFFERS_DIR):
                 summary = offer["profile"]["summary"]
                 skills = offer["focus"].get("skills", [])
 
-            # --- Filter experience ---
+            # --- Process all experience with role-specific achievements ---
             experience = []
             for job in master.get("experience", []):
-                if any(r in offer["focus"]["roles"] for r in job["roles"]):
-                    # Translate experience to target language
-                    job_copy = job.copy()
-                    if isinstance(job.get("period"), dict):
-                        job_copy["period"] = job["period"].get(lang, job["period"].get("es", ""))
-                    if isinstance(job.get("achievements"), dict):
-                        job_copy["achievements"] = job["achievements"].get(lang, job["achievements"].get("es", []))
-                    experience.append(escape_dict_values(job_copy))
+                # Translate experience to target language
+                job_copy = job.copy()
+                if isinstance(job.get("period"), dict):
+                    job_copy["period"] = job["period"].get(lang, job["period"].get("es", ""))
+                
+                # Handle role-specific achievements
+                if isinstance(job.get("achievements"), dict):
+                    # Check if any focus role has specific achievements
+                    role_achievements = None
+                    for role in offer["focus"]["roles"]:
+                        if role in job["achievements"]:
+                            # Found role-specific achievements
+                            if isinstance(job["achievements"][role], dict):
+                                role_achievements = job["achievements"][role].get(lang, job["achievements"][role].get("es", []))
+                            else:
+                                role_achievements = job["achievements"][role]
+                            break
+                    
+                    # If no role-specific achievements, use default (es/en)
+                    if role_achievements is None:
+                        role_achievements = job["achievements"].get(lang, job["achievements"].get("es", []))
+                    
+                    job_copy["achievements"] = role_achievements
+                
+                experience.append(escape_dict_values(job_copy))
 
             # Translate projects
             projects = None
@@ -213,15 +233,16 @@ for offer_file in os.listdir(OFFERS_DIR):
                 education=education
             )
 
-            # Generate file names with language suffix
+            # Generate file names with person name, offer name and language suffix
             lang_suffix = f"_{lang}" if is_multilang else ""
-            tex_path = os.path.join(build_path, f"{safe_name}{lang_suffix}.tex")
+            filename = f"{person_name}_{safe_name}{lang_suffix}"
+            tex_path = os.path.join(build_path, f"{filename}.tex")
             with open(tex_path, "w", encoding="utf-8") as f:
                 f.write(rendered)
 
             os.system(f'pdflatex -interaction=nonstopmode -output-directory="{build_path}" "{tex_path}"')
 
-            print(f"Generated build/{safe_name}/{safe_name}{lang_suffix}.pdf")
+            print(f"Generated build/{safe_name}/{filename}.pdf")
         
     except Exception as e:
         print(f"Error processing {offer_file}: {e}")

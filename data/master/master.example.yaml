@@ -39,35 +39,63 @@ skills:
 
 # === EXPERIENCIA ===
 # Soporta multi-idioma: usa "es:" y "en:" para cada campo de texto
+# NUEVO: Puedes personalizar achievements por rol específico
 experience:
   - company: "Nombre de la Empresa S.A."
     period:
       es: "Enero 2020 – Presente"
       en: "January 2020 – Present"
     roles:
-      - Software Engineer
-      - Backend Developer
+      - backend
+      - fullstack
     achievements:
+      # Achievements por defecto (se usan si no hay específicos del rol)
       es:
-        - Desarrollé APIs REST con Python y Django
-        - Implementé arquitectura de microservicios
+        - Desarrollé aplicaciones web completas
+        - Implementé soluciones escalables
         - Lideré equipo de 3 desarrolladores
       en:
-        - Developed REST APIs with Python and Django
-        - Implemented microservices architecture
+        - Developed complete web applications
+        - Implemented scalable solutions
         - Led team of 3 developers
+      
+      # Achievements específicos para rol backend
+      backend:
+        es:
+          - Diseñé arquitectura de microservicios con Python y Node.js
+          - Implementé APIs RESTful de alto rendimiento
+          - Optimicé consultas de base de datos reduciendo tiempo 40%
+        en:
+          - Designed microservices architecture with Python and Node.js
+          - Implemented high-performance RESTful APIs
+          - Optimized database queries reducing time by 40%
+      
+      # Achievements específicos para rol fullstack
+      fullstack:
+        es:
+          - Desarrollé aplicaciones full-stack con React y Node.js
+          - Integré frontend y backend con APIs RESTful
+          - Implementé autenticación JWT y gestión de sesiones
+        en:
+          - Developed full-stack applications with React and Node.js
+          - Integrated frontend and backend with RESTful APIs
+          - Implemented JWT authentication and session management
 
   - company: "Otra Empresa Ltda."
     period:
       es: "Junio 2018 – Diciembre 2019"
       en: "June 2018 – December 2019"
     roles:
-      - Junior Developer
+      - qa
+      - junior
     achievements:
+      # Solo achievements generales (se usan para todos los roles)
       es:
+        - Realicé pruebas manuales y automatizadas
         - Mantuve aplicaciones web legacy
         - Migré base de datos a PostgreSQL
       en:
+        - Performed manual and automated testing
         - Maintained legacy web applications
         - Migrated database to PostgreSQL
 
@@ -83,6 +111,7 @@ projects:
       - Python
       - Django
       - PostgreSQL
+    link: "https://github.com/tuusuario/proyecto1"
 
   - name:
       es: "App Móvil de Delivery"
@@ -94,6 +123,7 @@ projects:
       - React Native
       - Node.js
       - MongoDB
+    link: "https://github.com/tuusuario/proyecto2"
 
 # === CONFERENCIAS ===
 talks: []

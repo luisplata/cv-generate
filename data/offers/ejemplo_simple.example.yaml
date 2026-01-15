@@ -11,10 +11,11 @@ profile:
 
 focus:
   roles:
-    # IMPORTANTE: Estos roles deben coincidir con los roles en master.yaml
-    # Solo se incluirán experiencias que tengan estos roles
-    - Software Engineer
-    - Backend Developer
+    # IMPORTANTE: Define los roles para esta oferta
+    # Se mostrará TODA la experiencia, pero con achievements personalizados por rol si existen
+    # Si en master.yaml defines achievements específicos para estos roles, se usarán esos
+    # Si no, se usarán los achievements generales (es/en)
+    - backend
   
   skills:
     # Lista de habilidades a destacar en este CV

@@ -42,7 +42,7 @@
 - [ ] Copiar ejemplo: `cp data/offers/ejemplo_simple.example.yaml data/offers/MiOferta.yaml`
 - [ ] Editar `profile.title` con el título del puesto
 - [ ] Editar `profile.summary` adaptándolo a la oferta
-- [ ] Revisar `focus.roles` - deben coincidir con roles en master.yaml
+- [ ] Definir `focus.roles` - define el rol para achievements personalizados
 - [ ] Actualizar `focus.skills` con habilidades relevantes
 - [ ] Configurar `links` (o dejar que use los del .env)
 - [ ] Ajustar `show` según qué secciones mostrar
@@ -51,8 +51,14 @@
 
 ## Verificación Rápida
 
+### ¿Quiero personalizar achievements por rol?
+✅ En master.yaml, define `achievements.backend`, `achievements.qa`, etc.
+✅ En la oferta, define `focus.roles: [backend]`
+✅ Se usarán los achievements específicos del rol si existen
+
 ### ¿La experiencia no aparece?
-✅ Verifica que `focus.roles` coincida exactamente con `experience[].roles` en master.yaml
+✅ Ahora **toda la experiencia se muestra** automáticamente
+✅ Solo cambian los achievements según el rol definido en `focus.roles`
 
 ### ¿Quiero generar en inglés?
 ✅ Cambia `.env`: `LANGUAGES=en`

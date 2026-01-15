@@ -231,18 +231,56 @@ Los templates LaTeX están en `templates/`:
 
 Edita estos archivos para cambiar el diseño visual.
 
-## 🛠️ Filtrado por Roles
+## 🎯 Personalización por Rol
 
-El sistema filtra automáticamente la experiencia según los roles definidos en `focus.roles`:
+El sistema permite personalizar los achievements de cada experiencia según el rol de la oferta:
+
+### Estructura en master.yaml
 
 ```yaml
-# En la oferta
+experience:
+  - company: "Empresa S.A."
+    period:
+      es: "Enero 2020 – Presente"
+      en: "January 2020 – Present"
+    roles: [backend, fullstack]
+    achievements:
+      # Achievements por defecto (se usan si no hay específicos del rol)
+      es:
+        - Desarrollé aplicaciones web
+      en:
+        - Developed web applications
+      
+      # Achievements específicos para rol backend
+      backend:
+        es:
+          - Diseñé arquitectura de microservicios
+          - Implementé APIs RESTful de alto rendimiento
+        en:
+          - Designed microservices architecture
+          - Implemented high-performance RESTful APIs
+      
+      # Achievements específicos para rol fullstack
+      fullstack:
+        es:
+          - Desarrollé aplicaciones full-stack con React y Node.js
+        en:
+          - Developed full-stack applications with React and Node.js
+```
+
+### Cómo funciona
+
+1. **Se muestra toda la experiencia** (no hay filtrado por roles)
+2. Si en la oferta defines `focus.roles: [backend]`, y existe `achievements.backend` en master.yaml, se usan esos achievements
+3. Si no existen achievements específicos del rol, se usan los generales (`es`/`en`)
+4. Esto te permite tener **un solo master.yaml** con múltiples versiones de tus logros según el puesto
+
+### En la oferta
+
+```yaml
 focus:
   roles:
-    - QA Engineer
-    - QA Analyst
-
-# Solo se incluirán trabajos del master.yaml que tengan estos roles
+    - backend  # Usará achievements.backend si existen
 ```
 
 ## 🐛 Troubleshooting
@@ -262,19 +300,13 @@ pip install -r requirements.txt
 
 ### El PDF no muestra experiencia
 
-Verifica que los `roles` en `focus.roles` coincidan con los roles en `master.yaml`:
+Verifica que tengas experiencias definidas en `master.yaml`. Ahora **toda la experiencia se muestra**, independientemente de los roles.
 
-```yaml
-# Oferta
-focus:
-  roles:
-    - QA Engineer  # ✅ Exacto
+### Los achievements no son los esperados
 
-# Master
-experience:
-  - roles:
-      - QA Engineer  # ✅ Coincide
-```
+Verifica la estructura de `achievements` en `master.yaml`:
+- Si tienes `achievements.backend`, se usará cuando `focus.roles` incluya `backend`
+- Si no hay achievements específicos del rol, se usan los generales (`es`/`en`)
 
 ### Links no aparecen
 

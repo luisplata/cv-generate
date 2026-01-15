@@ -23,12 +23,11 @@ profile:
       with technical and non-technical stakeholders.
 
 focus:
-  # Los roles son iguales para todos los idiomas
+  # Define los roles para esta oferta
+  # Se mostrará TODA la experiencia, pero con achievements personalizados por rol si existen
   roles:
-    - Software Engineer
-    - Full Stack Developer
-    - Frontend Developer
-    - Backend Developer
+    - fullstack
+    - backend
   
   # Skills por idioma
   skills:
