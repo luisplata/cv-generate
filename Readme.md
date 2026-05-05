@@ -34,6 +34,7 @@ Sistema automatizado para generar CVs personalizados en PDF a partir de plantill
 3. **Activar entorno virtual**
    - Windows (PowerShell/CMD): `venv\Scripts\activate`
    - Linux/macOS: `source venv/bin/activate`
+   - Git Bash: `source venv/Scripts/activate`
 
 4. **Instalar dependencias**
    ```bash
